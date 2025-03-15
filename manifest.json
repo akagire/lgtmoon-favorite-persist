@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LGTMoon Favorites Sync",
+  "name": "LGTMoon Favorite Persist",
   "version": "1.0.0",
-  "description": "Sync your LGTMoon favorites across devices.",
+  "description": "Sync your LGTMoon favorites across your Google chrome.",
   "permissions": ["storage", "tabs"],
   "host_permissions": [
     "*://*.lgtmoon.dev/*",
