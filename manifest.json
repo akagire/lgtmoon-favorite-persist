@@ -3,7 +3,20 @@
   "name": "LGTMoon Favorites Sync",
   "version": "1.0.0",
   "description": "Sync your LGTMoon favorites across devices.",
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [
+    "*://*.lgtmoon.dev/*",
+    "*://*.lgtmoon.herokuapp.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.lgtmoon.dev/*",
+        "*://*.lgtmoon.herokuapp.com/*"
+      ],
+      "js": ["content_script.js"]
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   },

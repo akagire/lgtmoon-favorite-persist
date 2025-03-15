@@ -7,33 +7,43 @@ function showStatus(message: string, isError = false): void {
 }
 
 function uploadLocalFavoritesToSync(): void {
-  // localStorage に 'favorites' が存在するかチェック
-  const localFavoritesStr = localStorage.getItem('favorites');
-  if (!localFavoritesStr) {
-    console.log('No favorites found in localStorage.');
-    showStatus('お気に入りが見つかりませんでした。', true);
-    return;
-  }
+  // アクティブなタブを取得
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const currentTab = tabs[0];
 
-  let localFavorites;
-  try {
-    // JSON形式をパース
-    localFavorites = JSON.parse(localFavoritesStr);
-  } catch (error) {
-    console.error('Failed to parse favorites from localStorage:', error);
-    showStatus('お気に入りの解析に失敗しました。', true);
-    return;
-  }
-
-  // chrome.storage.sync にアップロード
-  chrome.storage.sync.set({ favorites: localFavorites }, () => {
-    if (chrome.runtime.lastError) {
-      console.error('Failed to save favorites to storage.sync:', chrome.runtime.lastError);
-      showStatus('同期ストレージへの保存に失敗しました。', true);
-    } else {
-      console.log('Successfully uploaded favorites to storage.sync.');
-      showStatus('お気に入りを同期ストレージにアップロードしました！');
+    // LGTMoonのサイトでない場合はエラーを表示
+    if (!currentTab.url?.includes('lgtmoon.')) {
+      showStatus('LGTMoonサイトでのみ使用できます。', true);
+      return;
     }
+
+    // content scriptにメッセージを送信してお気に入り情報を取得
+    chrome.tabs.sendMessage(currentTab.id!, { action: 'getFavorites' }, (response) => {
+      if (chrome.runtime.lastError) {
+        console.error('Error sending message to content script:', chrome.runtime.lastError);
+        showStatus('コンテンツスクリプトとの通信に失敗しました。', true);
+        return;
+      }
+
+      if (!response || !response.success) {
+        console.log('Failed to get favorites:', response?.error || 'Unknown error');
+        showStatus('お気に入りの取得に失敗しました。', true);
+        return;
+      }
+
+      const localFavorites = response.favorites;
+
+      // chrome.storage.sync にアップロード
+      chrome.storage.sync.set({ favorites: localFavorites }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to save favorites to storage.sync:', chrome.runtime.lastError);
+          showStatus('同期ストレージへの保存に失敗しました。', true);
+        } else {
+          console.log('Successfully uploaded favorites to storage.sync.');
+          showStatus('お気に入りを同期ストレージにアップロードしました！');
+        }
+      });
+    });
   });
 }
 
