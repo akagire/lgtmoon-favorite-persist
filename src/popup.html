@@ -7,8 +7,9 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      width: 300px;
-      padding: 15px;
+      width: 400px;
+      padding: 16px;
+      margin: 0;
     }
     h1 {
       font-size: 18px;
@@ -30,12 +31,36 @@
       margin-top: 10px;
       font-size: 14px;
     }
+    .favorites-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .favorite-item {
+      width: 128px;
+      height: auto;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .favorite-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .no-favorites {
+      margin-top: 16px;
+      color: #666;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
   <h1>LGTMoon お気に入り同期</h1>
   <button id="upload-favorites-button">お気に入りをアップロード</button>
   <div id="status" class="status"></div>
+  <div id="favorites-container" class="favorites-container"></div>
+  <div id="no-favorites" class="no-favorites" style="display: none;">お気に入りがありません</div>
   <script src="popup.js"></script>
 </body>
 </html>
