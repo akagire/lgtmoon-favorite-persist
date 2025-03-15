@@ -29,3 +29,7 @@ LGTM という文字が差し込まれた画像を生成するWebサービスが
 # パッケージインストールポリシー
 
 `yarn install {package_name} --exact` と、バージョンを固定してインストールしてください。
+
+# コミットメッセージ作成時のポリシー
+
+Angular の commit message convention を採用してください。
