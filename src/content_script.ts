@@ -1,7 +1,7 @@
 // LGTMoonサイトのlocalStorageからお気に入り情報を取得し、
 // chrome.storage.syncに保存するためのcontent script
 
-import { Favorite } from './types';
+import type { Favorite } from './types';
 
 // localStorageからお気に入り情報を取得する共通関数
 function getFavoritesFromLocalStorage(): Favorite[] | null {

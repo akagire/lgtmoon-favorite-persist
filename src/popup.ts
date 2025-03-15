@@ -1,8 +1,7 @@
-// お気に入り情報の型定義
-interface FavoriteItem {
-  url: string;
-  isConverted: boolean;
-}
+import type { Favorite } from './types';
+
+// FavoriteItemという名前で使用するためのエイリアス
+type FavoriteItem = Favorite;
 
 function showStatus(message: string, isError = false): void {
   const statusElement = document.getElementById('status');
@@ -23,8 +22,14 @@ function uploadLocalFavoritesToSync(): void {
       return;
     }
 
+    // タブIDが存在することを確認
+    if (!currentTab.id) {
+      showStatus('タブIDが取得できませんでした。', true);
+      return;
+    }
+
     // content scriptにメッセージを送信してお気に入り情報を取得
-    chrome.tabs.sendMessage(currentTab.id!, { action: 'getFavorites' }, (response) => {
+    chrome.tabs.sendMessage(currentTab.id, { action: 'getFavorites' }, (response) => {
       if (chrome.runtime.lastError) {
         console.error('Error sending message to content script:', chrome.runtime.lastError);
         showStatus('コンテンツスクリプトとの通信に失敗しました。', true);

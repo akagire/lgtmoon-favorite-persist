@@ -1,12 +1,12 @@
 // LGTMoon Favorites Sync のバックグラウンドスクリプト
 
-import { Favorite } from './types';
+import type { Favorite } from './types';
 
 // 指定したURLパターンに一致するLGTMoonのタブにメッセージを送信する関数
 function sendMessageToLgtmoonTabs(
   urlPattern: string,
   favorites: Favorite[],
-  domainLabel: string = ''
+  domainLabel = ''
 ): void {
   chrome.tabs.query({ url: urlPattern }, (tabs) => {
     if (tabs.length > 0) {
