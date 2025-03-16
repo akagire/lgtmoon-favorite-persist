@@ -4,64 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LGTMoon Favorites Sync</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      width: 400px;
-      padding: 16px;
-      margin: 0;
-    }
-    h1 {
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-    button {
-      background-color: #4285f4;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background-color: #3367d6;
-    }
-    .status {
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    .favorites-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .favorite-item {
-      width: 128px;
-      height: auto;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .favorite-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .no-favorites {
-      margin-top: 16px;
-      color: #666;
-      font-style: italic;
-    }
-  </style>
 </head>
 <body>
-  <h1>LGTMoon お気に入り同期</h1>
-  <button id="upload-favorites-button">お気に入りをアップロード</button>
-  <div id="status" class="status"></div>
-  <div id="storage-usage" class="status" style="margin-top: 5px; color: #666;"></div>
-  <div id="favorites-container" class="favorites-container"></div>
-  <div id="no-favorites" class="no-favorites" style="display: none;">お気に入りがありません</div>
+  <div id="root"></div>
   <script src="popup.js"></script>
 </body>
 </html>
