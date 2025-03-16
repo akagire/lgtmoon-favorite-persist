@@ -10,7 +10,7 @@ import { useFavorites } from '../hooks/useFavorites';
  * ポップアップのメインコンポーネント
  */
 export const Popup: React.FC = () => {
-  const { favorites, status, storageUsage, uploadLocalFavoritesToSync } = useFavorites();
+  const { favorites, status, storageUsage, uploadLocalFavoritesToSync, setStatusMessage } = useFavorites();
 
   return (
     <div className="popup-container">
@@ -22,7 +22,7 @@ export const Popup: React.FC = () => {
 
       <StorageUsage current={storageUsage.current} max={storageUsage.max} />
 
-      <FavoritesList favorites={favorites} />
+      <FavoritesList favorites={favorites} onCopy={setStatusMessage} />
     </div>
   );
 };

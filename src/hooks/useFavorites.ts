@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Favorite } from '../types';
 import { calculateMaxItems } from '../utils/storageUtils';
 
@@ -9,6 +9,20 @@ export const useFavorites = () => {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [status, setStatus] = useState<{ message: string; isError: boolean } | null>(null);
   const [storageUsage, setStorageUsage] = useState({ current: 0, max: 0 });
+
+  /**
+   * ステータスメッセージを設定する
+   */
+  const setStatusMessage = useCallback((message: string, isError = false) => {
+    setStatus({ message, isError });
+
+    // 3秒後にステータスメッセージをクリア
+    if (!isError) {
+      setTimeout(() => {
+        setStatus(null);
+      }, 3000);
+    }
+  }, []);
 
   // storage.syncからお気に入り情報を取得する
   const fetchFavoritesFromSync = () => {
@@ -140,5 +154,6 @@ export const useFavorites = () => {
     status,
     storageUsage,
     uploadLocalFavoritesToSync,
+    setStatusMessage,
   };
 };

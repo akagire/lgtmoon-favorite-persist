@@ -4,12 +4,13 @@ import { FavoriteItem } from './FavoriteItem';
 
 interface FavoritesListProps {
   favorites: Favorite[];
+  onCopy?: (message: string) => void;
 }
 
 /**
  * お気に入りリストを表示するコンポーネント
  */
-export const FavoritesList: React.FC<FavoritesListProps> = ({ favorites }) => {
+export const FavoritesList: React.FC<FavoritesListProps> = ({ favorites, onCopy }) => {
   if (favorites.length === 0) {
     return <div className="no-favorites">お気に入りがありません</div>;
   }
@@ -21,6 +22,7 @@ export const FavoritesList: React.FC<FavoritesListProps> = ({ favorites }) => {
           key={`${favorite.url}-${index}`}
           favorite={favorite}
           index={index}
+          onCopy={onCopy}
         />
       ))}
     </div>
